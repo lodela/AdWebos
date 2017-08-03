@@ -1,0 +1,92 @@
+<style>
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+/*
+ * Change default font
+ *
+ * #TODO Customize Bootstrap with Open Sans as default
+ */
+body{
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
+}
+
+/* Open Sans Styles */
+
+.font-weight-300 {
+    font-weight: 300;
+}
+.font-weight-400 {
+    font-weight: 400;
+}
+.font-weight-500 {
+    font-weight: 500;
+}
+.font-weight-600 {
+    font-weight: 600;
+}
+.font-weight-700 {
+    font-weight: 700;
+}
+.font-weight-800 {
+    font-weight: 800;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 80px;
+  line-height: 80px;
+}
+
+
+/* Border for page title with tabs*/
+
+.border-bottom-1{
+  border-bottom: 1px solid #ddd;
+}
+
+/* Cards */
+
+.card-sm .card-header{
+ padding: 0.55rem 1.05rem; /* -0.50 */
+ font-weight: 400;
+ font-size: 0.95rem;
+}
+
+/* Loader */
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0.2em;
+  background-color: transparent;
+  overflow: hidden;
+}
+
+.loader:after {
+  content: '';
+  width: 30%;
+  height: 0.2em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #2dcccd; /* BBVA AQUA */
+  animation: loading 2s infinite;
+}
+
+@keyframes loading {
+  0% {
+    left: -10%;
+  }
+  100% {
+    left: 110%;
+  }
+}
+</style>

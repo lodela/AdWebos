@@ -1,0 +1,102 @@
+<script>
+$(function() {
+
+  // First component to display
+  components.getComponent('requests');
+});
+
+
+/* ----------------------------------------------------------------------
+>>> LOADER
+---------------------------------------------------------------------- */
+var loader = (function() {
+
+  // DOM caching
+  const $loader = $('#loader');
+
+  function start() {
+    $loader.show();
+  }
+  
+  function finish(){
+    $loader.hide();
+  }
+
+  return {
+    start: start,
+    finish: finish
+  }
+})();
+
+
+/* ----------------------------------------------------------------------
+>>> COMPONENTS MODULE
+---------------------------------------------------------------------- */
+
+var components = (function() {
+
+  // DOM caching
+  const $mainContainer = $('#main-container');
+  const $window = $(window);
+  
+  // Get component by string or data-component of event
+  function getComponent(e) {
+    let name;
+    if(typeof e === 'string'){
+      name = e;
+    }else if(e.type === "click"){
+      name = e.currentTarget.dataset.component;
+    }else{
+      return;
+    }
+    loader.start();
+    render_(name);
+  }
+  
+  function render_(name) {
+    google.script.run.withSuccessHandler(_onSuccess)
+      .withFailureHandler(_onFailure)
+      .service('components', 'getComponent', name);
+  }
+  
+  // Sets HTML content
+  // $.html() extracts the tags, updates the DOM and evaluates the code embedded in the script tag.
+  function _onSuccess(component) {
+    $mainContainer.empty().html(component.html);
+    loader.finish();
+    scrollTop_();
+  }
+
+  function _onFailure(response) {
+    errors.handleError(response);
+    loader.finish();
+    scrollTop_();
+  }
+  
+  function scrollTop_() {
+    $window.scrollTop(0);
+  }
+  
+  // Public pointers
+  return {
+   getComponent: getComponent
+  }
+
+})();
+
+/* ----------------------------------------------------------------------
+>>> ERROR MODULE
+---------------------------------------------------------------------- */
+
+var errors = (function(){
+  
+  function handleError(err){
+    alert(err);
+  }
+  
+  return {
+    handleError: handleError
+  }
+})();
+
+</script>

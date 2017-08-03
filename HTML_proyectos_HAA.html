@@ -1,0 +1,182 @@
+<div class="col-sm-12"> <!-- base -->
+    <ul>
+      <li>
+        <div class="hexagon">
+          <div class="hexagon-in1">
+            <div class="hexagon-in2">
+              <span class="textIn">FATCA / CRS</span>
+            </div>
+          </div>
+        </div>
+      </li>
+      
+      <li>
+        <div class="hexagon">
+          <div class="hexagon-in1">
+            <div class="hexagon-in2">
+              <span class="textIn">Plataforma Fiscal</span>
+            </div>
+          </div>
+        </div>
+      </li>
+      
+      <li>
+        <div class="hexagon">
+          <div class="hexagon-in1">
+            <div class="hexagon-in2">
+              <span class="textIn">Datarmart Reportes Regulatorios</span>
+            </div>
+          </div>
+        </div>
+      </li>
+      
+      <li>
+        <div class="hexagon">
+          <div class="hexagon-in1">
+            <div class="hexagon-in2">
+              <span class="textIn">OEMN</span>
+            </div>
+          </div>
+        </div>
+      </li>
+      
+      <li>
+        <div class="hexagon">
+          <div class="hexagon-in1">
+            <div class="hexagon-in2">
+              <span class="textIn">SISPAGOS</span>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+    
+    <ul style=" margin-top: -113px;">
+      <li>
+        <div class="hexagon">
+          <div class="hexagon-in1">
+            <div class="hexagon-in2">
+              <span class="textIn">Buro de Credito</span>
+            </div>
+          </div>
+        </div>
+      </li>
+      
+      <li>
+        <div class="hexagon">
+          <div class="hexagon-in1">
+            <div class="hexagon-in2">
+              <span class="textIn">Liquidez</span>
+            </div>
+          </div>
+        </div>
+      </li>
+      
+      <li>
+        <div class="hexagon">
+          <div class="hexagon-in1">
+            <div class="hexagon-in2">
+              <span class="textIn">Precios de Transferencia</span>
+            </div>
+          </div>
+        </div>
+      </li>
+      
+      <li>
+        <div class="hexagon">
+          <div class="hexagon-in1">
+            <div class="hexagon-in2">
+              <span class="textIn">Contabilidad Electronica</span>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+</div> <!-- base -->
+
+<style>
+ul {
+  overflow-x: hidden;
+  padding-top: 113px;
+}
+
+li {
+  list-style-type: none;
+  display: inline-block;
+  margin: -113px 0 -113px 0;
+}
+.hexagon {
+    width: 100px;
+    height: 200px;
+    overflow: hidden;
+    visibility: hidden;
+    transform: rotate(120deg);
+    display: inline-block;
+    background-color: brown; //se agrego como prueba
+}
+
+.hexagon-in1 {
+    display: inline-block;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-60deg);
+    text-decoration: none;
+    background-color: blue;
+    }
+
+.hexagon-in2 {
+    width: 100%;
+    height: 100%;
+  	overflow: hidden;
+    visibility: visible;
+    line-height: normal;
+    color: #fff;
+    text-shadow: 1px 1px #000;
+    transform: rotate(-60deg);
+    transition: 1.5s ease-out;
+    background-color: aqua;
+}
+
+.textIn {
+  padding: 2px 4px 0 1px;
+  align-items: center;
+  height: 100%;
+  display: inline-flex;
+}
+
+li:nth-child(1) span {
+    background-position: -15px center;
+  }
+li:nth-child(2) span {
+    background-position: -115px center;
+  }
+li:nth-child(3) span {
+    background-position: -215px center;
+  }
+li:nth-child(4) span {
+    background-position: -315px center;
+  }
+li:nth-child(5) span {
+    background-position: -415px center;
+  }
+
+.hexagon-in2:hover {
+    background-position: -565px center;
+    color: #FCE001;
+  }
+ul {
+  text-align: center;
+  margin: 0;
+}
+
+.firstUl {
+  margin-bottom: -114px;
+}
+</style>
+
+<script>
+    $('li').on('click',function() {
+        redirectionPage('HTML_plantilla');
+    });
+</script>

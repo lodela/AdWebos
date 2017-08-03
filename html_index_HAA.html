@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://rawgit.com/wenzhixin/bootstrap-table/master/src/bootstrap-table.css"/>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://rawgit.com/wenzhixin/bootstrap-table/master/src/bootstrap-table.js"></script>
+
+    <?!= include('CSS_site_HAA'); ?>
+    <?!= include('CSS_imagenes_1_HAA'); ?>
+    
+  <body>
+      <div id="cabecera">
+        <div class="col-sm-3 col-row">
+          <div class="img_logo_bbva"></div>
+        </div>
+        
+        <div class="col-sm-6 col-row" style="text-align: -webkit-center;">
+          <span style="display: inline-flex;height: 100%;align-items: center;font-size: 45px;">HAA</span>
+        </div>
+        
+        <div class="col-sm-3 col-row">
+          <table class="table-user">
+            <tr>
+              <td id="name" class="infoUser"></td>
+              <td><img id="photo" class="borderCircle"></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+        <hr size="1px"/>
+      <!-- CONTENIDO -->
+      <div class="fluid" id="contenido">
+      </div>
+      <!-- FIN CONTENIDO -->
+  </body>
+  
+  <?!= include('JS_general_HAA');?>
+  
+  <script>
+    /*$(document).ready(function(){
+      $(window).resize(function(){
+          var he = $(window).height();
+          var salida = he-91;
+          $("#contenido").css("height",salida+'px');
+          console.log(salida);
+      });
+    });*/
+    
+    google.script.run.open();
+  </script>
+</html>

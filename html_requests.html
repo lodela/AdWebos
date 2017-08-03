@@ -1,0 +1,152 @@
+<!-- reuests.html -->
+<section class="bg-100 border-bottom-1">
+  <div class="container">
+    <div class="row align-items-center py-4">
+      <div class="col-12 col-md-auto">
+        <h1 class="font-weight-300">Solicitudes</h1>
+        <!--p>Curabitur vel convallis turpis</p-->
+      </div>
+      <div class="col-12 col-md text-right">
+        <? if(activeUser.profile == 1 || activeUser.profile == 2) { ?>
+          <button type="button" class="btn btn-primary" id="btn-new-request">Nueva solicitud</button>
+        <? } ?>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="requests-container">
+  <div class="container">
+    <div class="row">
+    <div class="col-12 pt-3">
+    <div class="card card-sm card-outline-secondary">
+      <div class="card-header border-bottom-0">
+        Solicitudes
+      </div>
+      <table class="table table-striped table-bordered table-hover table-sm">
+        <thead>
+          <th class="text-center">Folio</th>
+          <th class="text-center">Nombre Solicitud</th>
+          <th class="ttext-center">Responsable DyD</th>
+          <th class="text-center">Responsable ANS</th>
+          <th class="text-center">Fecha Requerida</th>
+          <th class="text-center">Estatus</th>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+    </div>
+    </div>
+  </div>
+</section>
+<!-- templates -->
+
+  <!-- table row -->
+  <template id="template-row">
+    <tr class="clickable-row">
+      <td class="text-center"></td>
+      <td class="text-left"></td>
+      <td class="text-left"></td>
+      <td class="text-left"></td>
+      <td class="text-center text-orange"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+    </tr>
+  </template>
+  <!-- /table row -->
+  
+  <!-- blank slate -->
+  <template id="template-blank-slate">
+    <div class="card-block text-center my-5">
+      <i class="material-icons md-dark md-48 mb-3"></i>
+      <h4 class="card-title"></h4>
+      <p class="card-text"></p>
+    </div>
+  </template>
+  <!-- /blank slate -->
+    
+<!-- /templates -->
+
+<script type="text/javascript">
+
+// Shorthand for $( document ).ready()
+$(function () {
+  // Populate the table on ready
+  requests.getRequests();
+});
+
+var requests = (function () {
+
+  // DOM caching
+  const $container = $('#requests-container');
+  const $templateRow = $('#template-row');
+  const $templateBlankSlate = $('#template-blank-slate');
+  const $btnNewRequest = $('#btn-new-request');
+  
+  // Attach event handlers
+  $container.on('click', '.clickable-row', viewRequestById_);
+  $btnNewRequest.on('click', newRequest);
+  
+  // Get all requests
+  function getRequests(){
+    google.script.run.withSuccessHandler(renderRequests_)
+    .withFailureHandler(onFailure_)
+    .service('requests', 'getRequests');
+  }
+  
+  function renderRequests_(response){
+    if ("error" in response) {
+      onFailure_(response);
+    } else {
+      let items = response.data.items;
+      let $tbody = $container.find('tbody').empty();
+      
+      if (items.length > 0) {
+        for (var i = items.length - 1; i >= 0; i--) {
+          let $clone = $($templateRow.html());
+          $clone.attr('data-id', items[i][0]);
+          $clone.find('td:eq(0)').text(items[i][0]);
+          $clone.find('td:eq(1)').text(items[i][1]);
+          $clone.find('td:eq(2)').text(items[i][2]);
+          $clone.find('td:eq(3)').text(items[i][3]);
+          $clone.find('td:eq(4)').text(items[i][4]);
+          $clone.find('td:eq(5)').text(items[i][5]);
+          $clone.find('td:eq(6)').text(items[i][6]);
+          $tbody.append($clone);
+        }
+      } else {
+        let $clone = $($templateBlankSlate.html());
+        $clone.find('.material-icons').text('error_outline');
+        $clone.find('.card-title').text('No tienes actividades en este periodo');
+        $clone.find('.card-text').text('Registra una utilizando el botón en la parte superior');
+        $tbody.append($clone);
+      }
+    }
+    finished_();
+  }
+  
+  function viewRequestById_(){
+    var requestId = $(this).data("id");
+    components.getComponent('single_request');
+  }
+  
+  function onFailure_(response) {
+    errors.handleError(response);
+    finished_();
+  }
+  
+  function newRequest(){
+    components.getComponent('new_request');
+  }
+  
+  function finished_(){
+    loader.finish();
+  }
+  
+  // Public pointers
+  return {
+    getRequests: getRequests
+  }
+})();
+</script>
+<!-- /requests.html -->

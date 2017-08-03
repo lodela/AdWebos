@@ -1,0 +1,147 @@
+<style>
+.menu ul {
+  list-style: none;
+  text-align: -webkit-center;
+  -webkit-padding-start: 60px;
+  font-family: Stag Sans Book;
+}
+
+.menu ul  li {
+  height: 90px;
+  margin: 5px 0px !important;
+  cursor: pointer;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.menu ul  li span {
+  width: 100%;
+  font-size: x-large;
+}
+
+.menu ul  li:hover span {
+  font-size: xx-large;
+}
+
+/*
+ *  Scroll
+ */
+
+#style-3::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+#style-3::-webkit-scrollbar {
+	width: 6px;
+	background-color: #F5F5F5;
+}
+
+#style-3::-webkit-scrollbar-thumb {
+	background-color: #8B9098;
+}
+
+/*
+ *  Fin Scroll
+ */
+
+/*
+* Colores de fondo
+*/
+#proyectos {
+  background-color: #009EE5;
+}
+
+#ans {
+  background-color: #52BCEC;
+}
+
+#equipo {
+  background-color: #89D1F3;
+}
+
+#revision {
+  background-color: #B5E5F9;
+}
+
+/*
+* Comentarios
+*/
+.contPrincipal {
+  align-items: center;
+  display: flex;
+  margin: 5px 5px 5px 0px;
+  border: 1px solid #dde3ea;
+  background-color: #f9f9fb;
+}
+
+.cellDate {
+  display: inline;
+  padding: 5px;
+  margin-right: 5px;
+  float: left;
+  font-weight: 700;
+  color: #003f8c;
+}
+
+.cellComent {
+  padding-left: 10px;
+  border-left: 1px solid blue;
+  overflow: hidden;
+  margin: 5px;
+  color: #0065b7;
+}
+</style>
+
+<div class="col-sm-12"> <!-- base -->
+  <div class="row">
+    <div class="col-sm-4 menu">
+      <ul>
+        <li id="proyectos"> <span>Proyectos</span> </li>
+        <li id="ans"> <span>ANS</span> </li>
+        <li id="equipo"> <span>Equipo</span> </li>
+        <li id="revision"> <span>Revisión</span></li>
+      </ul>
+    </div>
+    
+    
+    <div class="col-sm-7" style="right: 4%;position: absolute;height: 100%;">
+        <div class="col-sm-12 bg-primary text-white text-center">
+          Comentarios
+        </div>
+        
+        <div class="col-md-12" style="height: 94%; border: 1px solid #dde3ea; padding-top: 10px;padding-bottom: 10px;">
+          <div id="style-3" style="height: 100%;overflow: auto;">
+            <!-- aqui se agrega el codigo de los comentarios -->
+          </div>
+        </div>
+    </div>
+    
+  </div>
+<div> <!-- fin base -->
+
+<script>
+
+google.script.run.withSuccessHandler(function(data) {
+  $("#style-3").append(data);
+}).getComentarios();
+
+//****************************************************************************************************************
+$('#proyectos').on('click',function() {
+    redirectionPage('HTML_proyectos2_HAA');
+});
+
+$('#equipo').on('click',function() {
+    redirectionPage('HTML_equipo_HAA');
+});
+
+$('#ans').on('click',function() {
+    redirectionPage('HTML_fuera_HAA');
+});
+
+$('#revision').on('click',function() {
+    window.open('https://sites.google.com/a/bbva.com/ac/','_blank');
+});
+
+</script>

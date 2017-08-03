@@ -1,0 +1,237 @@
+<style>
+/* Estilos de  Informacion */
+.bottompDiv {
+  margin-bottom: 15px;
+}
+
+.subTitulo {
+  color: #333;
+  font-weight: 600;
+  padding: 3px 0px;
+  border: solid 1px #CCCCCC;
+  border-radius: 5px 5px 0px 0px;
+  background-color: #F9F9FB;
+}
+
+.contSubTitle {
+  padding: 2px 10px;
+  border-right: solid 1px #CCCCCC;
+  border-bottom: solid 1px #CCCCCC;
+  border-left: solid 1px #CCCCCC;
+  border-radius: 0px 0px 5px 5px;
+  color: #0065b7;
+}
+
+.textBlue {
+  color: #0065b7;
+}
+/* Estilos de Documentacion */
+.newsFiles {
+    border: 1px solid rebeccapurple;
+    text-align: -webkit-center;
+    background-color: #F1F2F4;
+    color: #006EC1;
+}
+
+.newsFiles p {
+    margin: 0;
+}
+
+.paddContainer {
+  padding: 10px;
+}
+
+.paTitle {
+  word-wrap: break-word;
+  word-wrap: break-word;
+  background-color: #BCE4FA;
+  font-weight: 600;
+}
+
+.spanDate {
+  display: inline-block;
+}
+
+.paHref {
+  color: #666;
+  font-style: italic;
+  font-weight: 400;
+  width: 100%;
+  display: block;
+}
+
+.progress {
+  margin: 0;
+}
+</style>
+
+<div class="col-sm-12"> <!-- base -->
+
+  <div id="titulo" class="col-sm-12 bg-primary text-white text-center" style="font-size: x-large;">
+    Titulo proyecto
+  </div>
+  <br><br>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item active">
+      <a class="nav-link active" data-toggle="tab" href="#informacion" role="tab">Informacion</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#documentacion" role="tab">Documentacion</a>
+    </li>
+  </ul>
+  
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <!-- Informacion -->
+    <div class="tab-pane active" id="informacion" role="tabpanel">
+      <br>
+      <div>
+        <div class="col-sm-6 bottompDiv">
+            <div class="bg-info text-white text-center subTitulo">Imagen (PPT)</div>
+            <iframe id="ppt" class="col-md-12 contSubTitle" style="min-height: 300px;" frameborder="0"></iframe>
+        </div>
+        
+        <div class="col-sm-6 bottompDiv">
+            <div class="col-sm-12 bottompDiv">
+                <div class="bg-info text-white text-center subTitulo">Ultima Actualizacion</div>
+                <div class="contSubTitle">
+                  <span id="fecha"></span>
+                </div>
+            </div>
+            
+            <div class="col-sm-12 bottompDiv">
+                <div class="bg-info text-white text-center subTitulo">Estatus</div>
+                <div class="contSubTitle">
+                  <span id="estatus"></span>
+                </div>
+            </div>
+    
+            <div class="col-sm-12 bottompDiv">
+                <div class="bg-info text-white text-center subTitulo">Presupuesto</div>
+                <div class="contSubTitle">
+                  <span id="presupuesto"></span>
+                </div>
+            </div>
+            
+            <div class="col-sm-12 bottompDiv">
+                <div class="bg-info text-white text-center subTitulo">Codigo Oficina de Proyectos</div>
+                <div class="contSubTitle">
+                  <span id="codigo"></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 bottompDiv">
+          <div class="bg-info text-white text-center subTitulo">Riesgos / Comentarios</div>
+          <div class="contSubTitle">
+            <span id="riesgosComentarios"></span>
+          </div>
+        </div>
+        <div class="col-sm-12 bottompDiv text-right">
+          <button id="integrantes" type="button" class="btn btn-default textBlue">
+            <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Personas
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Fin Informacion -->
+    
+    <!-- Documentacion -->
+    <div class="tab-pane" id="documentacion" role="tabpanel">
+      <br>
+      <div class="col-sm-12"> <!-- base -->
+          <div class="container">
+            <div id="infoFiles" class="row">
+              
+            </div>
+          </div>
+      </div> <!-- fin base -->
+    </div>
+    <!-- Fin documentacion -->
+    
+  </div>
+  <!-- Fin Tab panes -->
+  
+  <!-- .modal -->
+  <div id="modalTable" class="modal fade bd-example-modal-lg" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="row">
+            <div class="col-sm-11">
+            <h4 class="modal-title">Personas</h4>
+            </div>
+            <div class="col-sm-1">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div> <!-- row -->
+        </div> <!-- modal header -->
+      </div>
+        <!-- div table -->
+        <div id="divTableModal" class="modal-body noShow">
+          <table id="table" data-query-params="queryParams" data-pagination="true">
+              <thead>
+                  <tr>
+                      <th data-field="estado">ESTADO</th>
+                      <th data-field="correo">CORREO</th>
+                      <th data-field="usuario">USUARIO</th>
+                      <th data-field="nombre">NOMBRE</th>
+                      <th data-field="tio_empleado">TIPO EMPLEADO</th>
+                      <th data-field="perfil">PERFIL</th>
+                      <th data-field="empresa">EMPRESA</th>
+                      <th data-field="horario">HORARIO</th>
+                      <th data-field="piso">PISO</th>
+                      <th data-field="lugar">LUGAR</th>
+                      <th data-field="cel">CELULAR</th>
+                      <th data-field="ext">EXTENSIÓN</th>
+                      <th data-field="tipo_contrato">TIPO CONTRATO</th>
+                      <th data-field="proyecto">CLAVE PROYECTO</th>
+                      <th data-field="nombre_proyecto">NOMBRE PROYECTO</th>
+                      <th data-field="vigencia">VIGENCIA</th>
+                  </tr>
+              </thead>
+            </table>
+        </div>
+        <!-- fin div table -->
+        
+        <!-- div loading -->
+        <div id="divLoadingModal" class="modal-body">
+          <div class='progress progress-striped active'>
+            <div class='progress-bar progress-bar-color' id='progressBar' role='progressbar' style='width:100%;'></div>
+          </div>
+        </div>
+        <!-- fin div loading -->
+      </div>
+    </div>
+  </div>
+  <!-- /.modal -->
+</div>
+
+<script>
+  google.script.run.withSuccessHandler(function(data) {
+      $("#titulo").text(data[1]);
+      $("#estatus").text(data[2]);
+      $("#presupuesto").text(data[3]);
+      $("#ppt").attr('src',data[4]);
+      $("#codigo").text(data[5]);
+      $("#riesgosComentarios").text(data[6]);
+      $("#fecha").text(data[7]);
+  }).getUserPropertie('proyect');
+  
+  google.script.run.withSuccessHandler(function(code) {
+    //console.log(code);
+    $('#infoFiles').append(code);
+  }).proyectFiles();
+  
+  $('#integrantes').click(function() {
+    $('#modalTable').modal('toggle');
+    google.script.run.withSuccessHandler(function(dataUsers) {
+      $('#divTableModal').removeClass('noShow');
+      $('#divLoadingModal').addClass('noShow');
+      $('#table').bootstrapTable({
+        data: dataUsers
+      });
+    }).prueba();
+  });
+</script>

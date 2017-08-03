@@ -1,0 +1,256 @@
+<style>
+.progress{
+      margin-bottom: 0;
+}
+
+.modal {
+  text-align: center;
+  padding: 0!important;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.titulo {
+  background-color: red;
+}
+
+/* class de los selectores */
+.containerDiv {
+  border-radius: 5px;
+  border: solid 1px #CCCCCC;
+}
+
+.divTitle {
+  padding: 5px;
+  border-bottom: solid 1px #CCCCCC;
+  color: #333;
+  font-weight: 600;
+  background-color: #F9F9FB;
+  border-radius: 5px 5px 0px 0px;
+  text-align: -webkit-center;
+}
+
+.divInfo {
+  padding: 5px;
+  border-radius: 0px 0px 5px 5px;
+  color: #0065b7;
+}
+/* fin class de los selectores */
+
+</style>
+<? var out = JSON.parse(info.user); ?>
+
+<div class="col-sm-12"> <!-- base -->
+<? if(out.equipo == '1') { ?>   
+  <!-- .modal -->
+  <div id="myModal" class="modal fade" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class='progress progress-striped active'>
+          <div class='progress-bar progress-bar-color' id='progressBar' role='progressbar' style='width:100%;'></div>
+        </div> 
+      </div> <!-- /.modal-content -->
+    </div> <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+ 
+  <div class="col-sm-12">
+      <div id="titulo" class="col-sm-12 bg-primary text-white text-center" style="font-size: x-large;">Equipo</div>
+      <div class="col-md-12"><br></div>
+    
+    <? if(out.usersTimeReport == '1') { ?>
+    <div class="col-md-6">
+    <div class="containerDiv">
+      <div class="divTitle">
+        Usuario
+      </div>
+      <div class="divInfo">
+        <span>Seleccion un lider de proyecto: </span>
+        <select id="jefe">
+          <option selected="" value="0">Seleccione una opcion</option>
+        </select>
+      </div>
+    </div>
+    </div>
+    <? } ?>
+    
+    <br>
+    <div class="col-md-6">
+      <div class="containerDiv">
+        <div class="divTitle">
+          Archivo
+        </div>
+        <div class="divInfo">
+          <span>Seleccion el archivo de Time Report: </span>
+          <select id="idFiles">
+            <option disabled="" selected="">Seleccione una opcion</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12"><br></div>
+    <div id="containerTable" class="col-sm-12 noShow">
+      <table id="table" data-query-params="queryParams" data-pagination="true" data-height="300">
+        <thead>
+            <tr>
+                <th data-field="mail">Email</th>
+                <th data-field="name">Nombre</th>
+                <th data-field="xm">XM</th>
+                <th data-field="proyecto">Proyecto</th>
+                <th data-field="cumplimiento">Cumplimiento</th>
+            </tr>
+        </thead>
+      </table>
+    </div>
+    
+    <div id="seccionDownload" class="col-md-12 text-right noShow">
+      <button id="saveValues" type="button" class="btn btn-success">Download</button>
+    </div>
+    
+  </div>
+</div>
+
+<script>
+  $('#myModal').modal('toggle');
+  // Ingresa los option de los archivos de Time Report
+  google.script.run.withSuccessHandler(function(code) {
+    $('#idFiles').append(code);
+    $('#myModal').modal('toggle');
+  }).searchFilesTime();
+  
+  <? if(out.usersTimeReport == '1') { ?>
+  
+    var valueName = 0;
+    var valueDocument = 0;
+  
+    $('#jefe').change(function() {
+      var nameJefe = $(this).val();
+      valueName = nameJefe;
+      
+      console.log(valueName+' '+valueDocument);
+      if(valueName > 0 && valueDocument > 0) {
+        //console.log('aceptada');
+        searchValues(valueName,valueDocument);
+      }
+    });
+    
+    $('#idFiles').change(function() {
+      var idSelect = $(this).val();
+      valueDocument = idSelect;
+      
+      console.log(valueName+' '+valueDocument);
+      if(valueName > 0 && valueDocument > 0) {
+        //console.log('aceptada');
+        searchValues(valueName,valueDocument);
+      }
+    });
+    
+    function searchValues(valueName,valueDocument) {
+      $('#containerTable, #seccionDownload').addClass('noShow');
+      $('#myModal').modal('toggle');
+      google.script.run.withSuccessHandler(function(dataUsers) {
+        //console.log(dataUsers);
+        $('#table').bootstrapTable({
+          data: dataUsers,
+          type: 'owner',
+          sort: 'updated',
+          direction: 'desc',
+          per_page: 100,
+          page: 1
+        });
+        $('#containerTable, #seccionDownload').removeClass('noShow');
+        $('#myModal').modal('toggle');
+      }).translateId(valueDocument, valueName);
+      $('#table').bootstrapTable('destroy');
+    }
+    
+    google.script.run.withSuccessHandler(function(code) {
+      $('#jefe').append(code);
+      //console.log('ejecuto la funcion del servidor');
+    }).setJefeFuncional();
+    
+    $('#saveValues').click(function() {
+      $('#myModal').modal('toggle');
+      var nameFile = $('#idFiles').find('option:selected').text();
+      var nameJefe = $('#jefe').find('option:selected').text();
+      //console.log(nameFile);
+      google.script.run.withSuccessHandler(function(code) {
+        $('#myModal').modal('toggle');
+        //console.log(code);
+        window.open(code, '_blank');
+      }).download(nameFile,nameJefe);
+    });
+    
+  <? } else { ?>
+  
+    $('#idFiles').change(function() {
+      var idSelect = $(this).val();
+      $('#containerTable, #seccionDownload').addClass('noShow');
+      $('#myModal').modal('toggle');
+      google.script.run.withSuccessHandler(function(dataUsers) {
+        $('#table').bootstrapTable({
+          data: dataUsers,
+          type: 'owner',
+          sort: 'updated',
+          direction: 'desc',
+          per_page: 100,
+          page: 1
+        });
+        $('#containerTable, #seccionDownload').removeClass('noShow');
+        $('#myModal').modal('toggle');
+      }).translateId(idSelect);
+      $('#table').bootstrapTable('destroy');
+    });
+    
+    $('#saveValues').click(function() {
+      $('#myModal').modal('toggle');
+      var nameFile = $('#idFiles').find('option:selected').text();
+      google.script.run.withSuccessHandler(function(code) {
+        $('#myModal').modal('toggle');
+        window.open(code, '_blank');
+      }).download(nameFile);
+    });
+  
+  <? } ?>
+</script>
+<? } else { ?>
+  <!-- .modal -->
+  <div id="myModal" class="modal fade" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Sin Acceso</h5>
+        </div>
+        <div class="modal-body">
+          <p>No tienes los permisos suficientes. Por favor contactar con el administrador.</p>
+        </div>
+        <div class="modal-footer">
+          <button id="back" type="button" class="btn btn-primary">Regresar</button>
+        </div>
+      </div> <!-- /.modal-content -->
+    </div> <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+  
+<script>
+  $('#myModal').modal('toggle');
+  
+  $('#back').click(function() {
+    redirectionPage('HTML_principal_HAA');
+    $('#myModal').modal('toggle');
+  });
+</script>
+<? } ?>

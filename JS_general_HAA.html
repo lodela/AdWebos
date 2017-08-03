@@ -1,0 +1,42 @@
+<script>
+// DOM
+var $allHtml = $("#cabecera");
+var $back = $allHtml.find("#back");
+var $name = $allHtml.find("#name");
+//var $email = $allHtml.find("#email");
+var $photo = $allHtml.find("#photo");
+var $contenido = $("#contenido");
+
+
+// variables globales
+var idProyect = [];
+
+$(document).ready(function() {
+    infUser();
+    redirectionPage('HTML_principal_HAA');
+});
+
+//****************************************************************************************************************
+function infUser() {
+    google.script.run.withSuccessHandler(function(info) {
+        var inf = JSON.parse(info);
+        if(inf) {
+            $name.text(inf.name);
+            //$email.text(inf.email);
+            $photo.attr("src", inf.img);
+        }
+    }).getUserPropertie('user');
+}
+
+//****************************************************************************************************************
+function redirectionPage(template) {
+    google.script.run.withSuccessHandler(function(content) {
+        $contenido.html(content);
+    }).getHtml(template);
+}
+
+$(".contenedor").on("click", function() {
+  console.log('detecto el click');
+  console.log($(this).attr('id'));
+});
+</script>

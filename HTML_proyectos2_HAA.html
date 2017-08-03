@@ -1,0 +1,67 @@
+<div class="col-sm-12"> <!-- base -->
+  <div class="container">
+    <div id="proyectos" class="row">
+    </div>
+  </div>
+</div>
+
+<style>
+.contenedor {
+  height: 100px;
+  padding: 10px;
+}
+
+.divContainer {
+  cursor: pointer;
+  height: 100%;
+  border: 1px solid #eee;
+  background-color: #f9f9fb;
+  color: #0065b7;
+  font-weight: 600;
+  font-size: large;
+  padding: 2px;
+  text-align: center;
+}
+
+.divContainer:before {
+  content: '\200B';
+  display: inline-block;
+  height: 100%; 
+  vertical-align: middle;
+}
+
+.divContainer:hover {
+  background-color: #E0F6FC;
+  color: #434a58;
+}
+
+.spanText {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 20px;
+}
+
+</style>
+
+<script>
+createMenu();
+
+function createMenu() {
+  //console.log('entro en la funcion');
+  google.script.run.withSuccessHandler(function(data) {
+      //console.log(data);
+      $('#proyectos').append(data);
+  }).getProyects();
+}
+
+$('#proyectos').on('click','.contenedor', function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  var proyect = $(this).attr('id');
+  google.script.run.saveProyect(proyect);
+  redirectionPage('HTML_plantilla_HAA');
+  return false;
+});
+
+
+</script>
